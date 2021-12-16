@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useOktaAuth } from "@okta/okta-react";
 import Header from "./../components/Header";
+import { Typography } from "@mui/material";
 
 const Profile = () => {
   const { authState, oktaAuth } = useOktaAuth();
@@ -17,17 +18,23 @@ const Profile = () => {
     }
   }, [authState, oktaAuth]); // Update if authState changes
 
-  if (!userInfo) {
-    return (
-      <div>
-        <p>Fetching user profile...</p>
-      </div>
-    );
-  }
-
   return (
     <>
       <Header />
+      {userInfo ? (
+        <ProfileBox userInfo={userInfo} />
+      ) : (
+        <Typography sx={{ textAlign: "center", mt: 2 }}>
+          Fetching your details...
+        </Typography>
+      )}
+    </>
+  );
+};
+
+const ProfileBox = ({ userInfo }) => {
+  return (
+    <>
       <div
         style={{
           marginTop: "40px",

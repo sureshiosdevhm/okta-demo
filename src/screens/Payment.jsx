@@ -1,5 +1,15 @@
+import { Typography } from "@mui/material";
+import Header from "./../components/Header";
+
 function Payment() {
-  return <div>This is payment page</div>;
+  return (
+    <>
+      <Header />
+      <Typography sx={{ textAlign: "center", mt: 2 }}>
+        You are in Payment Section!
+      </Typography>
+    </>
+  );
 }
 
 export default Payment;

@@ -14,11 +14,11 @@ export default function Header() {
   const history = useHistory();
   const { authState, oktaAuth } = useOktaAuth();
   const [showLoader, setShowLoader] = useState(false);
-  const [title, setTitle] = useState("Hi There! Welcome.");
+  const [title, setTitle] = useState("");
 
   useEffect(() => {
     if (!authState || !authState.isAuthenticated) {
-      setTitle("Hi There! Welcome.");
+      setTitle("Welcome,");
     } else {
       oktaAuth.getUser().then((info) => {
         const name = `Welcome, ${info.given_name} ${info.family_name}!`;
@@ -63,7 +63,7 @@ export default function Header() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" color="primary">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {title}
@@ -72,19 +72,43 @@ export default function Header() {
             color="inherit"
             onClick={() => {
               setShowLoader(true);
-              authState.isAuthenticated ? handleLogout() : handleLogin();
+              history.push("/");
+              setShowLoader(false);
             }}
           >
-            {authState.isAuthenticated ? "Logout" : "Login"}
+            Home
           </Button>
+          {authState.isAuthenticated && (
+            <Button
+              color="inherit"
+              onClick={() => {
+                setShowLoader(true);
+                history.push("/profile");
+                setShowLoader(false);
+              }}
+            >
+              Profile
+            </Button>
+          )}
           <Button
             color="inherit"
             onClick={() => {
               setShowLoader(true);
               history.push("/payment");
+              setShowLoader(false);
             }}
           >
             Payment
+          </Button>
+          <Button
+            variant="outlined"
+            color="inherit"
+            onClick={() => {
+              setShowLoader(true);
+              authState.isAuthenticated ? handleLogout() : handleLogin();
+            }}
+          >
+            {authState.isAuthenticated ? "Logout" : "Login"}
           </Button>
         </Toolbar>
       </AppBar>
