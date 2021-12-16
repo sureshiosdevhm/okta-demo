@@ -18,10 +18,10 @@ export default function Header() {
 
   useEffect(() => {
     if (!authState || !authState.isAuthenticated) {
-      setTitle("Welcome,");
+      setTitle("Welcome!");
     } else {
       oktaAuth.getUser().then((info) => {
-        const name = `Welcome, ${info.given_name} ${info.family_name}!`;
+        const name = `Welcome! ${info.given_name} ${info.family_name}!`;
         setTitle(name);
       });
     }
@@ -65,6 +65,16 @@ export default function Header() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" color="primary">
         <Toolbar>
+          <img
+            src="logo.png"
+            alt="logo"
+            style={{
+              maxWidth: 100,
+              maxHeight: 50,
+              paddingRight: 10,
+              margin: 0,
+            }}
+          />
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {title}
           </Typography>
